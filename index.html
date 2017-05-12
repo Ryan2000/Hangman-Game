@@ -3,8 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script type="application/javascript" src="assets/javascript/game.js" ></script>
+
 </head>
 <body>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="content">
+            <div class="container">
+                <h1>Hangman of Doom!</h1>
+
+
+                <p> Press any key if you dare to begin</p>
+
+                <p> Wins <span id="wins"></span></p>
+
+                <p> Current Word</p>
+                <p id="current_word"></p>
+
+                <p> Number of Guesses Remaining before death <span id="guesses"></span></p>
+
+                <p> Letters already guessed</p>
+                <p id="guessed_letters"></p>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>
