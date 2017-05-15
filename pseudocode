@@ -12,8 +12,15 @@ function startGame() {
 
   // We print the solution in console (for testing).
 
+
+Separate function (reset)
+
   // reset the guess and success array at each round. Array of letters (first array, for succesful guesses)
   // reset the wrong guesses from the previous round. Array of letters (second arrays, one for fails)
+
+
+
+
 
   // Fill up the blanksAndSuccesses list with appropriate number of blanks.
   // This is based on number of letters in solution.
@@ -34,6 +41,8 @@ function startGame() {
 // It's where we will do all of the comparisons for matches.
 // Again, it's not being called here. It's just being made for future use.
 function checkLetters(letter) {
+
+
 
   var letterInWord = false;
   // Check if a letter exists inside the array at all. (by looping thru the word as an array)
