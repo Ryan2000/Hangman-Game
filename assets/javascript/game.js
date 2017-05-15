@@ -79,6 +79,11 @@ function reset(){
 // Again, it's not being called here. It's just being made for future use.
 function checkLetters(letter) {
 
+    //If the letter is in failArray, indexOf will return something
+    //other than -1
+    if (failArray.indexOf(letter) != -1){
+        return;  //Exit the function
+    }
 
 
     var letterInWord = false;
