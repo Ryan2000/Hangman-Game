@@ -16,6 +16,8 @@ var chosenWord = "";
 // Its how we we will start and restart the game.
 // (Note: It's not being run here. It's just being made for future use.)
 function startGame() {
+
+    firstMove = true;
     // Reset the guesses back to 0.
     guesses = 0;
 
@@ -31,6 +33,14 @@ function startGame() {
     // We count the number of letters in the word. (tells us the number of `numBlanks`)
     numBlanks = chosenWord.length;
 
+    // Fill up the blanksAndSuccesses list with appropriate number of blanks.
+    // This is based on number of letters in solution.
+    for (var i = 0; i < numBlanks; i++) {
+        // make a list of `_`
+        // ex dog = ['d', 'o','g'] and generate a new array like ['_', '_', '_']
+        blanksAndSuccessesArray.push("_");
+    }
+
     // We print the solution in console (for testing).
     console.log(chosenWord);
     numberOfGuesses = chosenWord.length * 2;
@@ -40,30 +50,20 @@ function reset(){
 
 
     // reset the guess and success array at each round. Array of letters (first array, for succesful guesses)
-    blanksAndSuccessesArray.clear();
-    guessArray.clear();
+    blanksAndSuccessesArray = [];
+    guessArray = [];
     // reset the wrong guesses from the previous round. Array of letters (second arrays, one for fails)
-    failArray.clear();
+    failArray = [];
 
-
-
-
-    // Fill up the blanksAndSuccesses list with appropriate number of blanks.
-    // This is based on number of letters in solution.
-    for (var i = 0; i < numBlanks; i++) {
-        // make a list of `_`
-        // ex dog = ['d', 'o','g'] and generate a new array like ['_', '_', '_']
-        blanksAndSuccessesArray.push("_");
-    }
 
 // update html on the page
     // set #guesses-left to numberOfGuesses
     var guessesLeft = document.getElementById("guesses-left");
-    guessesLeft.innerHTML = numberofGuesses;
+    guessesLeft.innerHTML = numberOfGuesses;
 
     // set #word-blanks to the blanks at the beginning of each round in the HTML
     var wordBlanks = document.getElementById("word-blanks");
-    wordBlanks.innerHTML = blanksAndSuccessesArray.join(" ");
+    wordBlanks.innerHTML = blanksAndSuccessesArray.join("");
 
     // set #wrong-guesses to empty / clears the wrong guesses from the previous round by
     var wrongGuesses = document.getElementById("wrong-guesses");
@@ -87,14 +87,15 @@ function checkLetters(letter) {
     }
 
     // If `letterInWord`, then figure out exactly where (which indices).
-    if (letterInWord = true) {
+    if (letterInWord === true) {
         // Loop through the word, one letter at a time
         // Populate the blanksAndSuccesses with every instance of the letter.
         for (var i = 0; i < chosenWordArray.length; i++){
             // if chosenWord letter is the same as letter
-            if (chosenWordArray[i] = letter) {
+            if (chosenWordArray[i] === letter) {
                 // Here we set the specific space in blanks and letter equal to the letter when there is a match.
                 blanksAndSuccessesArray[i] = letter;
+                guesses++;
             }
         }
 
@@ -117,8 +118,7 @@ function roundComplete() {
 
     // Update the HTML to reflect the new number of guesses. Also update the correct guesses.
     var guessesLeft = document.getElementById("guesses-left");
-    guessesLeft.innerHTML = "Number of Guesses = " + numberOfGuesses + " guesses remaining = " + (numberOfGuesses - guesses);
-
+    guessesLeft.innerHTML = "<p>Number of Guesses = " + guesses + "</p><p>Guesses remaining = " + (numberOfGuesses - guesses) + "</p>";
     // Update #word-blanks to show any correct guesses
     var wordBlanks = document.getElementById("word-blanks");
     wordBlanks.innerHTML = blanksAndSuccessesArray.join(" ");
@@ -147,18 +147,23 @@ function roundComplete() {
     }
 }
 
-
 // on initial page load Starts the Game by running the startGame() function
 startGame();
+var firstMove = true;
 
 // Then initiate the function for capturing key clicks.
 document.onkeyup = function(event) {
-    // Converts all key clicks to lowercase letters.
-    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-    // Runs the code to check for correctness.
-    checkLetters(letterGuessed);
-    // Runs the code after each round is done.
-    roundComplete();
+    if (firstMove){
+        firstMove = false;
+        roundComplete();
+    } else {
+        // Converts all key clicks to lowercase letters.
+        var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+        // Runs the code to check for correctness.
+        checkLetters(letterGuessed);
+        // Runs the code after each round is done.
+        roundComplete();
+    }
 };
 
 
