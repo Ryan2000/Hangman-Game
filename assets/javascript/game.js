@@ -2,7 +2,7 @@
 var wordsList = ["gargoyle", "demon", "ghost", "godzilla", "imp", "giant", "gorgon",
     "pegasus", "ghoul", "horror", "ogre", "vampire", "werewolf", "yeti"];
 var guesses;
-var choseWordArray = [];
+var chosenWordArray = [];
 var numBlanks;
 var blanksAndSuccessesArray = [];
 var failArray = [];
@@ -10,7 +10,7 @@ var guessArray = [];
 var numberOfGuesses = 0;
 var numWins = 0;
 var numLosses = 0;
-
+var chosenWord = "";
 
 // startGame()
 // Its how we we will start and restart the game.
@@ -20,8 +20,8 @@ function startGame() {
     guesses = 0;
 
     // Solution is chosen randomly from wordList. (Like RPS)
-    var index = Math.floor((Math.random() * wordList.length));
-    chosenWord = wordList[index];
+    var index = Math.floor((Math.random() * wordsList.length));
+    chosenWord = wordsList[index];
 
     // The word is broken into individual letters. (convert string to array of letters)
     for (var i = 0; i < chosenWord.length; i++) {
@@ -101,7 +101,7 @@ function checkLetters(letter) {
     } else {// If the letter doesn't exist at all...
         // ..then we add the letter to the list of wrong letters, and we subtract one of the guesses.
         failArray.push(letter);
-        numberofGuesses--;
+        numberOfGuesses--;
     }
 }
 
@@ -113,11 +113,11 @@ function roundComplete() {
     // First, log an initial status update in the console telling us how many wins, losses, and guesses are left.
     console.log(numWins);
     console.log(numLosses);
-    console.log(numberofGuesses);
+    console.log(numberOfGuesses);
 
     // Update the HTML to reflect the new number of guesses. Also update the correct guesses.
     var guessesLeft = document.getElementById("guesses-left");
-    guessesLeft.innerHTML = "Number of Guesses = " + numberofGuesses + " guesses remaining = " + (numberOfGuesses - guesses);
+    guessesLeft.innerHTML = "Number of Guesses = " + numberOfGuesses + " guesses remaining = " + (numberOfGuesses - guesses);
 
     // Update #word-blanks to show any correct guesses
     var wordBlanks = document.getElementById("word-blanks");
@@ -129,7 +129,7 @@ function roundComplete() {
 
     // If we have gotten all the letters to match the solution...
     var word = blanksAndSuccessesArray.join("");
-    var secretWord = chosenWord.join("");
+    var secretWord = chosenWord;
     if (word === secretWord){
         // ..add to the win counter & give the user an alert.
         numWins++
@@ -138,7 +138,7 @@ function roundComplete() {
         // Update the win counter in the HTML & restart the game.
         reset();
         startGame();
-    } else if (numberofGuess - guesses === 0){ // If we've run out of guesses..
+    } else if (numberOfGuesses - guesses === 0){ // If we've run out of guesses..
         numLosses++; // Add to the loss counter.
         alert("You're better off being a Merman :("); // Give the user an alert.
         reset(); // Update the loss counter in the HTML.
