@@ -47,7 +47,8 @@ function startGame() {
 }
 
 function reset(){
-
+    chosenWord = "";
+    chosenWordArray = [];
 
     // reset the guess and success array at each round. Array of letters (first array, for succesful guesses)
     blanksAndSuccessesArray = [];
@@ -59,7 +60,7 @@ function reset(){
 // update html on the page
     // set #guesses-left to numberOfGuesses
     var guessesLeft = document.getElementById("guesses-left");
-    guessesLeft.innerHTML = numberOfGuesses;
+    guessesLeft.innerHTML = "";
 
     // set #word-blanks to the blanks at the beginning of each round in the HTML
     var wordBlanks = document.getElementById("word-blanks");
@@ -68,6 +69,9 @@ function reset(){
     // set #wrong-guesses to empty / clears the wrong guesses from the previous round by
     var wrongGuesses = document.getElementById("wrong-guesses");
     wrongGuesses.innerHTML = "";
+
+
+
 }
 
 // checkLetters() function
@@ -95,14 +99,14 @@ function checkLetters(letter) {
             if (chosenWordArray[i] === letter) {
                 // Here we set the specific space in blanks and letter equal to the letter when there is a match.
                 blanksAndSuccessesArray[i] = letter;
-                guesses++;
+
             }
         }
 
     } else {// If the letter doesn't exist at all...
         // ..then we add the letter to the list of wrong letters, and we subtract one of the guesses.
         failArray.push(letter);
-        numberOfGuesses--;
+        guesses++;
     }
 }
 
@@ -138,11 +142,17 @@ function roundComplete() {
         // Update the win counter in the HTML & restart the game.
         reset();
         startGame();
+
+        var wins = document.getElementById("wins");
+        wins.innerHTML = numWins;
     } else if (numberOfGuesses - guesses === 0){ // If we've run out of guesses..
         numLosses++; // Add to the loss counter.
-        alert("You're better off being a Merman :("); // Give the user an alert.
+        alert("You lose. You're better off being a Merman :("); // Give the user an alert.
         reset(); // Update the loss counter in the HTML.
         startGame(); // Restart the game.
+
+        var losses = document.getElementById("losses");
+        losses.innerHTML = numLosses;
 
     }
 }
